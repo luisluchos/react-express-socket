@@ -25,7 +25,7 @@ function App() {
     socket.emit("message", formValues?.message);
     const newMessage = {
       body: formValues?.message,
-      from: "me",
+      from: "Me",
     };
     setMessages([newMessage, ...messages]);
     setFormValues({ ...formValues, message: "" });
@@ -40,22 +40,40 @@ function App() {
   }, [messages]);
 
   return (
-    <div className="App">
-      <form onSubmit={handlesubmit}>
-        <input type="text" name="message" onChange={handleChange} value={formValues.message} />
-        <button type="submit" value="Submit">
-          Send
-        </button>
-      </form>
-
-      {messages.map((message, key) => (
-        <div key={key}>
-          <div>
-            {message.from}: {message.body}
-          </div>
+    <div className="h-screen bg-zinc-800 text-green-700 p-10 grid justify-items-center">
+      <h1 className="text-2xl font-bold text-blue-800 ">Chat react socket-io</h1>
+  
+        <div className="grid justify-items-center bg-zinc-600 p-10 w-2/5 ">
+          <form onSubmit={handlesubmit} className="mt-10">
+            <input
+              type="text"
+              name="message"
+              onChange={handleChange}
+              value={formValues.message}
+              className=" text-black p-2"
+            />
+            <button type="submit" value="Submit" className="bg-zinc-700 p-2 text-white">
+              Send
+            </button>
+          </form>
+          <ul className="h-80 overflow-y-auto px-4 scrollbar">
+            {messages.map((message, key) => (
+              <li
+                key={key}
+                className={`table rounded-lg my-4 p-2 ${
+                  message.from === "Me"
+                    ? "bg-gradient-to-r from-white to-zinc-500 ml-auto"
+                    : "bg-gradient-to-r from-blue-400 to-pink-500"
+                }`}
+              >
+                <p>
+                  {message.from}: {message.body}
+                </p>
+              </li>
+            ))}
+          </ul>
         </div>
-      ))}
-    </div>
+      </div>
   );
 }
 
