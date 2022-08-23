@@ -5,7 +5,7 @@ import http from "http";
 import cors from "cors";
 import "dotenv/config";
 
-import { dirname } from "path";
+import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 //create server express
@@ -30,8 +30,10 @@ io.on("connection", (socket) => {
   });
 });
 
-//le decimos que va a serrvir cuando pidan archivos estáticos
-app.use(express.static(__dirname + "../client/build"));
+//le decimos que va a serrvir cuando pidan archivos estáticos, en este caso porque estamos subiendo el front y back en el mismo repositorio
+app.use(express.static(join(__dirname, "../client/build")))
+
+console.log(__dirname + "/client/build")
 
 //app esta engolbado en un nuevo objeto de servidor (server), que será quien escuche las peticiones
 server.listen(process.env.PORT || 4000, () => {
