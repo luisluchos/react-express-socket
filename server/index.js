@@ -5,8 +5,13 @@ import http from "http";
 import cors from "cors";
 import "dotenv/config";
 
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
 //create server express
 const app = express();
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 //create server http for socket.io, y give permision cors
 const server = http.createServer(app);
@@ -24,6 +29,9 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("message", { body: message, from: socket.id });
   });
 });
+
+//le decimos que va a serrvir cuando pidan archivos estáticos
+app.use(express.static(__dirname + "../client/build"));
 
 //app esta engolbado en un nuevo objeto de servidor (server), que será quien escuche las peticiones
 server.listen(process.env.PORT || 4000, () => {
