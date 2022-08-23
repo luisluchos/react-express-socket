@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
 });
 
 //le decimos que va a serrvir cuando pidan archivos estáticos, en este caso porque estamos subiendo el front y back en el mismo repositorio
-app.use(express.static(join(__dirname, "../client/build")))
+app.use(express.static(join(__dirname, "../client")))
 
 console.log(__dirname + "/client/build")
 
