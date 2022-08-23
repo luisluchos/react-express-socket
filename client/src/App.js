@@ -11,26 +11,33 @@ function App() {
     start: new Date(),
     end: new Date(),
   });
-  const [messages, setMessages] = useState([{ body: "text", from: "user1" }]);
+  const [messages, setMessages] = useState([{ body: "", from: "" }]);
 
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
+  console.log(messages);
+
   const handlesubmit = (e) => {
     e.preventDefault();
     console.log(formValues);
     socket.emit("message", formValues?.message);
+    const newMessage = {
+      body: formValues?.message,
+      from: "me",
+    };
+    setMessages([newMessage, ...messages]);
     setFormValues({ ...formValues, message: "" });
   };
 
   useEffect(() => {
-    const reciveMessage = (message) => setMessages({ message });
+    const reciveMessage = (data) => setMessages([data, ...messages]);
     socket.on("message", reciveMessage);
     return () => {
       socket.off("message", reciveMessage);
     };
-  }, []);
+  }, [messages]);
 
   return (
     <div className="App">
@@ -41,11 +48,12 @@ function App() {
         </button>
       </form>
 
-      {messages.map((message) => (
-        <>
-          <div>{message.body}</div>
-          <div>{message.from}</div>
-        </>
+      {messages.map((message, key) => (
+        <div key={key}>
+          <div>
+            {message.from}: {message.body}
+          </div>
+        </div>
       ))}
     </div>
   );
