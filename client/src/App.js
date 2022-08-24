@@ -40,7 +40,7 @@ function App() {
   }, [messages]);
 
   return (
-    <div className="h-screen bg-zinc-800 text-green-700 p-10 grid justify-items-center">
+    <div className="h-screen bg-zinc-800 text-red-700 p-10 grid justify-items-center">
       <h1 className="text-2xl font-bold text-blue-800 ">Chat react socket-io</h1>
   
         <div className="grid justify-items-center bg-zinc-600 p-10 w-2/5 ">
@@ -67,7 +67,7 @@ function App() {
                 }`}
               >
                 <p>
-                  {message.from}: {message.body}
+                  {message.from}: <span className="text-black">{message.body}</span>
                 </p>
               </li>
             ))}
