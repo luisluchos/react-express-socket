@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { useState, useEffect } from "react";
 
 //initialize socket
-const socket = io("http://localhost:4000");
+const socket = io("http://localhost:8002");
 
 function App() {
   const [formValues, setFormValues] = useState({
